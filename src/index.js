@@ -1,7 +1,25 @@
 require("dotenv").config({ path: "./.env" });
 const express = require("express");
 const connectDB = require("./db/index.js");
+const cookieParser = require("cookie-parser");
 const app = express();
+
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(cookieParser())
+
+
+
+
+const userRouter = require("./routes/user.routes.js")
+
+
+
+
+app.use("/api/v1/user", userRouter)
 
 connectDB().then(()=>{
   app.listen(process.env.PORT || 3000, () =>
